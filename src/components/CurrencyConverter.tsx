@@ -101,36 +101,39 @@ export function CurrencyConverter() {
           />
         </div>
 
-        {/* From Currency */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">From</label>
-          <CurrencySelector
-            value={fromCurrency}
-            onChange={setFromCurrency}
-            className="h-16 w-full"
-          />
-        </div>
+        {/* Currency Selection Row */}
+        <div className="flex items-center gap-4">
+          {/* From Currency */}
+          <div className="flex-1 space-y-2">
+            <label className="text-sm font-medium text-foreground">From</label>
+            <CurrencySelector
+              value={fromCurrency}
+              onChange={setFromCurrency}
+              className="h-16 w-full"
+            />
+          </div>
 
-        {/* Swap Button */}
-        <div className="flex justify-center">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleSwapCurrencies}
-            className="rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light border-accent transition-all duration-300 hover:scale-110 active:scale-95"
-          >
-            <ArrowUpDown className="h-5 w-5 text-accent-foreground" />
-          </Button>
-        </div>
+          {/* Swap Button */}
+          <div className="flex items-end pb-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleSwapCurrencies}
+              className="rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light border-accent transition-all duration-300 hover:scale-110 active:scale-95"
+            >
+              <ArrowUpDown className="h-5 w-5 text-accent-foreground" />
+            </Button>
+          </div>
 
-        {/* To Currency */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">To</label>
-          <CurrencySelector
-            value={toCurrency}
-            onChange={setToCurrency}
-            className="h-16 w-full"
-          />
+          {/* To Currency */}
+          <div className="flex-1 space-y-2">
+            <label className="text-sm font-medium text-foreground">To</label>
+            <CurrencySelector
+              value={toCurrency}
+              onChange={setToCurrency}
+              className="h-16 w-full"
+            />
+          </div>
         </div>
 
         {/* Conversion Result */}
