@@ -102,9 +102,9 @@ export function CurrencyConverter() {
         </div>
 
         {/* Currency Selection Row */}
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col md:flex-row items-center gap-4">
           {/* From Currency */}
-          <div className="flex-1 space-y-2">
+          <div className="w-full md:flex-1 space-y-2">
             <label className="text-sm font-medium text-foreground">From</label>
             <CurrencySelector
               value={fromCurrency}
@@ -114,19 +114,19 @@ export function CurrencyConverter() {
           </div>
 
           {/* Swap Button */}
-          <div className="flex items-end pb-2">
+          <div className="flex items-center justify-center md:items-end md:pb-2">
             <Button
               variant="outline"
               size="sm"
               onClick={handleSwapCurrencies}
-              className="rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light border-accent transition-all duration-300 hover:scale-110 active:scale-95"
+              className="rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light border-accent transition-all duration-300 hover:scale-110 active:scale-95 rotate-90 md:rotate-0"
             >
               <ArrowUpDown className="h-5 w-5 text-accent-foreground" />
             </Button>
           </div>
 
           {/* To Currency */}
-          <div className="flex-1 space-y-2">
+          <div className="w-full md:flex-1 space-y-2">
             <label className="text-sm font-medium text-foreground">To</label>
             <CurrencySelector
               value={toCurrency}

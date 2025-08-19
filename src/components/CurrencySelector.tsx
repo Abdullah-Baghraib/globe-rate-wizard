@@ -41,7 +41,7 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
           role="combobox"
           aria-expanded={open}
           className={cn(
-            "justify-between font-medium bg-card hover:bg-muted/50 border-border shadow-design-sm transition-all duration-300",
+            "justify-between font-medium bg-card hover:bg-muted/50 border-border shadow-design-sm transition-all duration-300 min-w-0",
             className
           )}
         >
@@ -52,7 +52,7 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
               </div>
               <div className="flex flex-col items-start">
                 <span className="font-semibold text-foreground">{selectedCurrency.code}</span>
-                <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                <span className="text-xs text-muted-foreground truncate max-w-[80px] sm:max-w-[120px]">
                   {selectedCurrency.country}
                 </span>
               </div>
