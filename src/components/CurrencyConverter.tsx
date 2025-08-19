@@ -81,14 +81,11 @@ export function CurrencyConverter() {
   const toCurrencyData = getCurrencyByCode(toCurrency);
 
   return (
-    <Card className="w-full max-w-lg mx-auto bg-gradient-card border-border shadow-design-xl">
-      <CardHeader className="text-center pb-4">
-        <CardTitle className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-          Currency Converter
+    <Card className="w-full bg-gradient-card border-border shadow-design-xl">
+      <CardHeader className="text-center pb-6">
+        <CardTitle className="text-xl font-bold text-foreground">
+          Convert Currency
         </CardTitle>
-        <p className="text-muted-foreground">
-          Convert currencies with real-time exchange rates
-        </p>
       </CardHeader>
       
       <CardContent className="space-y-6">

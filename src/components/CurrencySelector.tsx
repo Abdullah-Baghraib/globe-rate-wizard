@@ -47,8 +47,8 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
         >
           {selectedCurrency ? (
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-lg shadow-design-sm">
-                {selectedCurrency.flag}
+              <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
+                <span className="text-sm">{selectedCurrency.flag}</span>
               </div>
               <div className="flex flex-col items-start">
                 <span className="font-semibold text-foreground">{selectedCurrency.code}</span>
@@ -79,8 +79,8 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
                 }}
                 className="flex items-center gap-3 p-3 hover:bg-accent-light transition-colors cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-lg shadow-design-sm">
-                  {currency.flag}
+                <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
+                  <span className="text-sm">{currency.flag}</span>
                 </div>
                 <div className="flex-1">
                   <div className="font-semibold text-foreground">{currency.code}</div>
@@ -107,8 +107,8 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
                 }}
                 className="flex items-center gap-3 p-3 hover:bg-accent-light transition-colors cursor-pointer"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center text-lg shadow-design-sm">
-                  {currency.flag}
+                <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
+                  <span className="text-sm">{currency.flag}</span>
                 </div>
                 <div className="flex-1">
                   <div className="font-semibold text-foreground">{currency.code}</div>
