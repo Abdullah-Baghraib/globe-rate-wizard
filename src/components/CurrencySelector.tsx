@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -7,6 +8,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from '@/components/ui/command';
 import {
   Popover,
@@ -63,66 +65,68 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[320px] p-0 bg-popover border-border shadow-design-lg">
-        <Command>
+      <PopoverContent className="w-[320px] p-0 bg-popover border-border shadow-design-lg" align="start">
+        <Command className="bg-popover">
           <CommandInput placeholder="Search currency or country..." className="h-12" />
-          <CommandEmpty>No currency found.</CommandEmpty>
-          
-          <CommandGroup heading="Popular Currencies" className="text-xs font-semibold text-muted-foreground p-2">
-            {popularCurrencyList.map((currency) => (
-              <CommandItem
-                key={currency.code}
-                value={`${currency.code} ${currency.name} ${currency.country}`}
-                onSelect={() => {
-                  onChange(currency.code);
-                  setOpen(false);
-                }}
-                className="flex items-center gap-3 p-3 hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
-              >
-                <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
-                  <span className="text-sm">{currency.flag}</span>
-                </div>
-                <div className="flex-1">
-                  <div className="font-semibold text-foreground">{currency.code}</div>
-                  <div className="text-sm text-muted-foreground">{currency.name}</div>
-                </div>
-                <Check
-                  className={cn(
-                    "h-4 w-4 text-primary",
-                    value === currency.code ? "opacity-100" : "opacity-0"
-                  )}
-                />
-              </CommandItem>
-            ))}
-          </CommandGroup>
-          
-          <CommandGroup heading="All Currencies" className="text-xs font-semibold text-muted-foreground p-2">
-            {otherCurrencies.map((currency) => (
-              <CommandItem
-                key={currency.code}
-                value={`${currency.code} ${currency.name} ${currency.country}`}
-                onSelect={() => {
-                  onChange(currency.code);
-                  setOpen(false);
-                }}
-                className="flex items-center gap-3 p-3 hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
-              >
-                <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
-                  <span className="text-sm">{currency.flag}</span>
-                </div>
-                <div className="flex-1">
-                  <div className="font-semibold text-foreground">{currency.code}</div>
-                  <div className="text-sm text-muted-foreground">{currency.name}</div>
-                </div>
-                <Check
-                  className={cn(
-                    "h-4 w-4 text-primary",
-                    value === currency.code ? "opacity-100" : "opacity-0"
-                  )}
-                />
-              </CommandItem>
-            ))}
-          </CommandGroup>
+          <CommandList className="max-h-[300px] overflow-y-auto">
+            <CommandEmpty>No currency found.</CommandEmpty>
+            
+            <CommandGroup heading="Popular Currencies" className="text-xs font-semibold text-muted-foreground p-2">
+              {popularCurrencyList.map((currency) => (
+                <CommandItem
+                  key={currency.code}
+                  value={`${currency.code} ${currency.name} ${currency.country}`}
+                  onSelect={() => {
+                    onChange(currency.code);
+                    setOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-3 hover:bg-muted/80 hover:text-foreground data-[selected=true]:bg-muted/60 data-[selected=true]:text-foreground transition-colors cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
+                    <span className="text-sm">{currency.flag}</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-foreground">{currency.code}</div>
+                    <div className="text-sm text-muted-foreground">{currency.name}</div>
+                  </div>
+                  <Check
+                    className={cn(
+                      "h-4 w-4 text-primary",
+                      value === currency.code ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+            
+            <CommandGroup heading="All Currencies" className="text-xs font-semibold text-muted-foreground p-2">
+              {otherCurrencies.map((currency) => (
+                <CommandItem
+                  key={currency.code}
+                  value={`${currency.code} ${currency.name} ${currency.country}`}
+                  onSelect={() => {
+                    onChange(currency.code);
+                    setOpen(false);
+                  }}
+                  className="flex items-center gap-3 p-3 hover:bg-muted/80 hover:text-foreground data-[selected=true]:bg-muted/60 data-[selected=true]:text-foreground transition-colors cursor-pointer"
+                >
+                  <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
+                    <span className="text-sm">{currency.flag}</span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-semibold text-foreground">{currency.code}</div>
+                    <div className="text-sm text-muted-foreground">{currency.name}</div>
+                  </div>
+                  <Check
+                    className={cn(
+                      "h-4 w-4 text-primary",
+                      value === currency.code ? "opacity-100" : "opacity-0"
+                    )}
+                  />
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
         </Command>
       </PopoverContent>
     </Popover>

@@ -102,7 +102,7 @@ export function CurrencyConverter() {
         </div>
 
         {/* Currency Selection Row */}
-        <div className="flex flex-col md:flex-row items-center gap-4">
+        <div className="flex flex-col md:flex-row items-stretch gap-4">
           {/* From Currency */}
           <div className="w-full md:flex-1 space-y-2">
             <label className="text-sm font-medium text-foreground">From</label>
@@ -114,7 +114,7 @@ export function CurrencyConverter() {
           </div>
 
           {/* Swap Button */}
-          <div className="flex items-center justify-center md:items-end md:pb-2">
+          <div className="flex items-center justify-center md:items-end md:pb-0 md:pt-6">
             <Button
               variant="outline"
               size="sm"
