@@ -81,102 +81,119 @@ export function CurrencyConverter() {
   const toCurrencyData = getCurrencyByCode(toCurrency);
 
   return (
-    <Card className="w-full bg-gradient-card border-border shadow-design-xl">
-      <CardHeader className="text-center pb-6">
-        <CardTitle className="text-xl font-bold text-foreground">
-          Convert Currency
-        </CardTitle>
-      </CardHeader>
+    <>
+      <Card className="w-full bg-gradient-card border-border shadow-design-xl">
+        <CardHeader className="text-center pb-6">
+          <CardTitle className="text-xl font-bold text-foreground">
+            Convert Currency
+          </CardTitle>
+        </CardHeader>
+        
+        <CardContent className="space-y-6">
+          {/* Amount Input */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">Amount</label>
+            <Input
+              type="text"
+              placeholder="Enter amount"
+              value={amount}
+              onChange={handleAmountChange}
+              className="text-xl font-semibold h-14 bg-input border-input-border focus:ring-primary focus:border-primary transition-all duration-300"
+            />
+          </div>
+
+          {/* Currency Selection Row */}
+          <div className="flex flex-col md:flex-row items-stretch gap-4">
+            {/* From Currency */}
+            <div className="w-full md:flex-1 space-y-2">
+              <label className="text-sm font-medium text-foreground">From</label>
+              <CurrencySelector
+                value={fromCurrency}
+                onChange={setFromCurrency}
+                className="h-16 w-full"
+              />
+            </div>
+
+            {/* Swap Button */}
+            <div className="flex items-center justify-center md:items-end md:pb-0 md:pt-6">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleSwapCurrencies}
+                className="rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light border-accent transition-all duration-300 hover:scale-110 active:scale-95 rotate-90 md:rotate-0"
+              >
+                <ArrowUpDown className="h-5 w-5 text-accent-foreground" />
+              </Button>
+            </div>
+
+            {/* To Currency */}
+            <div className="w-full md:flex-1 space-y-2">
+              <label className="text-sm font-medium text-foreground">To</label>
+              <CurrencySelector
+                value={toCurrency}
+                onChange={setToCurrency}
+                className="h-16 w-full"
+              />
+            </div>
+          </div>
+
+          {/* Conversion Result */}
+          <div className="bg-primary-light rounded-lg p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium text-primary">Converted Amount</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={fetchExchangeRates}
+                disabled={loading}
+                className="h-8 w-8 p-0 hover:bg-primary/10"
+              >
+                <RefreshCw className={`h-4 w-4 text-primary ${loading ? 'animate-spin' : ''}`} />
+              </Button>
+            </div>
+            
+            <div className="text-3xl font-bold text-primary">
+              {toCurrencyData?.flag} {convertedAmount.toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })} {toCurrency}
+            </div>
+            
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center gap-1">
+                <TrendingUp className="h-4 w-4" />
+                <span>
+                  1 {fromCurrency} = {getExchangeRate().toLocaleString(undefined, {
+                    minimumFractionDigits: 4,
+                    maximumFractionDigits: 4,
+                  })} {toCurrency}
+                </span>
+              </div>
+            </div>
+            
+            {lastUpdated && (
+              <div className="text-xs text-muted-foreground text-center">
+                Last updated: {lastUpdated.toLocaleTimeString()}
+              </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
       
-      <CardContent className="space-y-6">
-        {/* Amount Input */}
-        <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Amount</label>
-          <Input
-            type="text"
-            placeholder="Enter amount"
-            value={amount}
-            onChange={handleAmountChange}
-            className="text-xl font-semibold h-14 bg-input border-input-border focus:ring-primary focus:border-primary transition-all duration-300"
-          />
-        </div>
-
-        {/* Currency Selection Row */}
-        <div className="flex flex-col md:flex-row items-stretch gap-4">
-          {/* From Currency */}
-          <div className="w-full md:flex-1 space-y-2">
-            <label className="text-sm font-medium text-foreground">From</label>
-            <CurrencySelector
-              value={fromCurrency}
-              onChange={setFromCurrency}
-              className="h-16 w-full"
-            />
-          </div>
-
-          {/* Swap Button */}
-          <div className="flex items-center justify-center md:items-end md:pb-0 md:pt-6">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleSwapCurrencies}
-              className="rounded-full w-12 h-12 p-0 bg-accent hover:bg-accent-light border-accent transition-all duration-300 hover:scale-110 active:scale-95 rotate-90 md:rotate-0"
-            >
-              <ArrowUpDown className="h-5 w-5 text-accent-foreground" />
-            </Button>
-          </div>
-
-          {/* To Currency */}
-          <div className="w-full md:flex-1 space-y-2">
-            <label className="text-sm font-medium text-foreground">To</label>
-            <CurrencySelector
-              value={toCurrency}
-              onChange={setToCurrency}
-              className="h-16 w-full"
-            />
-          </div>
-        </div>
-
-        {/* Conversion Result */}
-        <div className="bg-primary-light rounded-lg p-4 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-sm font-medium text-primary">Converted Amount</span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={fetchExchangeRates}
-              disabled={loading}
-              className="h-8 w-8 p-0 hover:bg-primary/10"
-            >
-              <RefreshCw className={`h-4 w-4 text-primary ${loading ? 'animate-spin' : ''}`} />
-            </Button>
-          </div>
-          
-          <div className="text-3xl font-bold text-primary">
-            {toCurrencyData?.flag} {convertedAmount.toLocaleString(undefined, {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })} {toCurrency}
-          </div>
-          
-          <div className="flex items-center justify-between text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <TrendingUp className="h-4 w-4" />
-              <span>
-                1 {fromCurrency} = {getExchangeRate().toLocaleString(undefined, {
-                  minimumFractionDigits: 4,
-                  maximumFractionDigits: 4,
-                })} {toCurrency}
-              </span>
-            </div>
-          </div>
-          
-          {lastUpdated && (
-            <div className="text-xs text-muted-foreground text-center">
-              Last updated: {lastUpdated.toLocaleTimeString()}
-            </div>
-          )}
-        </div>
-      </CardContent>
-    </Card>
+      {/* Acknowledgment */}
+      <div className="text-center mt-4">
+        <p className="text-sm text-muted-foreground">
+          Developed by{" "}
+          <a 
+            href="https://abdullahdev-five.vercel.app/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:text-primary-dark underline decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
+          >
+            Abdullah.dev
+          </a>
+        </p>
+      </div>
+    </>
   );
 }
