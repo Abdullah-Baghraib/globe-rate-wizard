@@ -50,7 +50,7 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
           {selectedCurrency ? (
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
-                <span className="text-sm">{selectedCurrency.flag}</span>
+                <span className="text-sm text-gray-800">{selectedCurrency.flag}</span>
               </div>
               <div className="flex flex-col items-start">
                 <span className="font-semibold text-foreground">{selectedCurrency.code}</span>
