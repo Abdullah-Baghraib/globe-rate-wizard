@@ -77,7 +77,7 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
                   onChange(currency.code);
                   setOpen(false);
                 }}
-                className="flex items-center gap-3 p-3 hover:bg-accent-light transition-colors cursor-pointer"
+                className="flex items-center gap-3 p-3 hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
               >
                 <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
                   <span className="text-sm">{currency.flag}</span>
@@ -105,7 +105,7 @@ export function CurrencySelector({ value, onChange, className }: CurrencySelecto
                   onChange(currency.code);
                   setOpen(false);
                 }}
-                className="flex items-center gap-3 p-3 hover:bg-accent-light transition-colors cursor-pointer"
+                className="flex items-center gap-3 p-3 hover:bg-muted hover:text-foreground transition-colors cursor-pointer"
               >
                 <div className="w-8 h-8 rounded-full bg-white border-2 border-border flex items-center justify-center text-lg shadow-design-sm overflow-hidden">
                   <span className="text-sm">{currency.flag}</span>
