@@ -14,6 +14,11 @@ A simple and intuitive currency converter application built with React, TypeScri
 
 Check out the live demo of the application [here](https://forexly.vercel.app/).
 
+
+![Forexly](https://github.com/user-attachments/assets/215d08df-dc20-490f-a2a8-fff69b4f26ee)
+
+
+
 ## Getting Started
 
 To get a local copy up and running, follow these simple steps.
