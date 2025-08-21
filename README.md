@@ -1,4 +1,4 @@
-# Globe Rate Wizard
+# Forexly
 
 A simple and intuitive currency converter application built with React, TypeScript, and Vite.
 
@@ -12,7 +12,7 @@ A simple and intuitive currency converter application built with React, TypeScri
 
 ## Live Demo
 
-Check out the live demo of the application [here](https://globe-rate-wizard.vercel.app/).
+Check out the live demo of the application [here](https://forexly.vercel.app/).
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ To get a local copy up and running, follow these simple steps.
 
 1.  Clone the repo
     ```sh
-    git clone https://github.com/Abdullah-Baghraib/globe-rate-wizard.git
+    git clone https://github.com/your_username/forexly.git
     ```
 2.  Install NPM packages
     ```sh
