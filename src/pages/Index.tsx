@@ -1,4 +1,6 @@
 import { CurrencyConverter } from '@/components/CurrencyConverter';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   return (
@@ -19,6 +21,12 @@ const Index = () => {
 
         {/* Main Converter */}
         <CurrencyConverter />
+
+        <div className="text-center mt-8">
+            <Link to="/gold-price">
+                <Button variant="link">Check Gold Prices</Button>
+            </Link>
+        </div>
       </div>
     </div>
   );
