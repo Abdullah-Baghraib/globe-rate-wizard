@@ -8,8 +8,9 @@ const Index = () => {
         <div className="text-center mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Forexly
-            </span>
+              Currency
+            </span>{' '}
+            <span className="text-foreground">Converter</span>
           </h1>
           <p className="text-muted-foreground">
             Real-time exchange rates for global currencies
