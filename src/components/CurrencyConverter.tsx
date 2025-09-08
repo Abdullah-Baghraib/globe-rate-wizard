@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowUpDown, RefreshCw, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,7 +23,7 @@ export function CurrencyConverter() {
   
   const { toast } = useToast();
 
-  const fetchExchangeRates = async () => {
+  const fetchExchangeRates = React.useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
@@ -44,11 +44,11 @@ export function CurrencyConverter() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [fromCurrency, toast]);
 
   useEffect(() => {
     fetchExchangeRates();
-  }, [fromCurrency]);
+  }, [fetchExchangeRates]);
 
   useEffect(() => {
     if (exchangeRates[toCurrency] && amount) {
@@ -179,21 +179,6 @@ export function CurrencyConverter() {
           </div>
         </CardContent>
       </Card>
-      
-      {/* Acknowledgment */}
-      <div className="text-center mt-4">
-        <p className="text-sm text-muted-foreground">
-          Developed by{" "}
-          <a 
-            href="https://abdullahdev-five.vercel.app/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:text-primary-dark underline decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
-          >
-            Abdullah.dev
-          </a>
-        </p>
-      </div>
     </>
   );
 }

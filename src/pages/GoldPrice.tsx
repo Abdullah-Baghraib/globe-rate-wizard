@@ -297,21 +297,6 @@ const GoldPricePage = () => {
         )}
         </div>
       </Card>
-
-      {/* Developer Credit */}
-      <div className="text-center mt-4">
-        <p className="text-sm text-muted-foreground">
-          Developed by{" "}
-          <a 
-            href="https://abdullahdev-five.vercel.app/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:text-primary-dark underline decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
-          >
-            Abdullah.dev
-          </a>
-        </p>
-      </div>
     </div>
   );
 };

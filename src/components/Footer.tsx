@@ -1,0 +1,86 @@
+import { Globe, Linkedin } from "lucide-react";
+
+export function Footer() {
+  return (
+    <footer className="bg-background/80 backdrop-blur-sm border-t border-border/40 mt-auto">
+      <div className="container mx-auto px-4 py-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          {/* Developer Credit */}
+          <p className="text-sm text-muted-foreground order-2 sm:order-1">
+            Developed by{" "}
+            <a 
+              href="https://abdullahdev-five.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primary-dark decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
+            >
+              Abdullah.dev
+            </a>
+          </p>
+
+          {/* Social Media Links */}
+          <div className="flex items-center gap-4 order-1 sm:order-2">
+            <a
+              href="https://abdullahdev-five.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              title="Portfolio"
+            >
+              <Globe className="w-5 h-5" />
+              <span className="sr-only">Portfolio Website</span>
+            </a>
+            <a
+              href="mailto:abdullahbaghraib@gmail.com"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              title="Email"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <span className="sr-only">Email</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/abdullah-baghrib/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              title="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5" />
+              <span className="sr-only">LinkedIn Profile</span>
+            </a>
+            <a
+              href="https://www.instagram.com/ms1ms3.3/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              title="Instagram"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+              <span className="sr-only">Instagram Profile</span>
+            </a>
+            <a
+              href="https://www.x.com/ms1ms33__"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              title="X (Twitter)"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z" />
+                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
+              </svg>
+              <span className="sr-only">X (Twitter) Profile</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}
