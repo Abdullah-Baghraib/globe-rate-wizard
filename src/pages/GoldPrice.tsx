@@ -1,11 +1,13 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
+import { Check, ChevronsUpDown, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Skeleton } from '@/components/ui/skeleton';
 import { MonetizationIcon, UpdateIcon, CurrencyExchangeIcon, ErrorIcon } from '@/components/icons';
+import { cn } from '@/lib/utils';
 
 interface GoldPriceData {
   ounce: number;
@@ -22,12 +24,33 @@ interface ConvertedPrice {
   gram: number;
 }
 
-const GoldPricePage: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
+const formatCurrency = (value: number, currency: string): string => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+};
+
+const formatDate = (timestamp: number): string => {
+  return new Date(timestamp).toLocaleString('en-US', {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+  });
+};
+
+const GoldPricePage = () => {
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [goldPriceData, setGoldPriceData] = useState<GoldPriceData | null>(null);
   const [exchangeRates, setExchangeRates] = useState<ExchangeRates | null>(null);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>('');
+  const [selectedCurrency, setSelectedCurrency] = useState('');
   const [convertedPrice, setConvertedPrice] = useState<ConvertedPrice | null>(null);
 
   const fetchData = useCallback(async () => {
@@ -88,16 +111,46 @@ const GoldPricePage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[var(--background)] p-4">
-        <Card className="w-full max-w-md p-6 rounded-2xl" style={{ background: 'var(--card-gradient)', boxShadow: 'var(--card-shadow)' }}>
-          <div className="space-y-4">
-            <Skeleton className="h-8 w-3/4" />
-            <Skeleton className="h-4 w-1/2" />
-            <div className="flex justify-between">
-              <Skeleton className="h-12 w-2/5" />
-              <Skeleton className="h-12 w-2/5" />
-            </div>
-            <Skeleton className="h-10 w-full" />
+      <div className="container mx-auto px-4 py-20 min-h-screen overflow-y-auto max-w-3xl">
+        <Card className="w-full p-8 shadow-lg rounded-xl border border-border/40 my-auto">
+          <div className="space-y-6">
+            <Card className="w-full p-8 bg-blue-500 text-white rounded-xl">
+              <div className="space-y-4">
+                <Skeleton className="h-8 w-3/4 bg-blue-400/50" />
+                <div className="grid grid-cols-2 gap-8">
+                  <Skeleton className="h-20 bg-blue-400/50" />
+                  <Skeleton className="h-20 bg-blue-400/50" />
+                </div>
+              </div>
+            </Card>
+            <Skeleton className="h-12 w-full" />
+            <Card className="w-full p-8 bg-emerald-500 text-white rounded-xl">
+              <div className="space-y-4">
+                <Skeleton className="h-8 w-3/4 bg-emerald-400/50" />
+                <div className="grid grid-cols-2 gap-8">
+                  <Skeleton className="h-20 bg-emerald-400/50" />
+                  <Skeleton className="h-20 bg-emerald-400/50" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="container mx-auto px-4 py-20 min-h-screen overflow-y-auto max-w-3xl">
+        <Card className="w-full p-8 shadow-lg rounded-xl border border-border/40 my-auto">
+          <div className="text-center space-y-4">
+            <ErrorIcon className="w-12 h-12 mx-auto text-destructive" />
+            <h2 className="text-xl font-semibold">Error</h2>
+            <p className="text-muted-foreground">{error}</p>
+            <Button onClick={handleRetry} variant="outline">
+              <UpdateIcon className="w-4 h-4 mr-2" />
+              Retry
+            </Button>
           </div>
         </Card>
       </div>
@@ -105,86 +158,160 @@ const GoldPricePage: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[var(--background)] p-4 font-sans">
-      <Card className="w-full max-w-md p-6 rounded-2xl" style={{ background: 'var(--card-gradient)', boxShadow: 'var(--card-shadow)' }}>
-        <div className="space-y-6">
-          <div className="rounded-2xl p-5 text-[var(--primary-foreground)]" style={{ background: 'var(--primary-gradient)' }}>
-            <div className="flex items-center gap-3 mb-4">
-              <MonetizationIcon className="w-6 h-6" />
-              <h2 className="text-xl font-semibold">Gold Prices (USD)</h2>
+    <div className="container mx-auto px-4 py-20 min-h-screen overflow-y-auto max-w-2xl">
+      <Card className="w-full p-8 shadow-lg rounded-xl border border-border/40 my-auto">
+        <div className="space-y-8">
+          {/* USD Price Card */}
+          <Card className="w-full p-8 bg-gradient-to-r from-[#0f2c80] to-[#0C70F3FF] text-white rounded-xl">
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-medium flex items-center gap-2">
+                <MonetizationIcon className="w-6 h-6" />
+                Gold Prices (USD)
+              </h2>
+              <Button 
+                onClick={fetchData} 
+                variant="ghost" 
+                size="icon" 
+                className="text-white hover:text-white hover:bg-white/10"
+              >
+                <UpdateIcon className="w-5 h-5" />
+              </Button>
             </div>
-            <div className="flex justify-around items-center">
-              <div className="text-center">
-                <p className="opacity-80">Per Ounce</p>
-                <p className="text-3xl font-bold">${goldPriceData?.ounce.toFixed(2)}</p>
-              </div>
-              <div className="w-px h-16 bg-[var(--divider-color)]"></div>
-              <div className="text-center">
-                <p className="opacity-80">Per Gram</p>
-                <p className="text-3xl font-bold">${goldPriceData?.gram.toFixed(2)}</p>
-              </div>
-            </div>
-          </div>
-
-          {goldPriceData?.lastUpdated && (
-            <div className="flex justify-center">
-                <div className="px-4 py-2 flex items-center gap-2 text-sm rounded-full bg-[var(--muted)] text-[var(--muted-foreground)]">
-                    <UpdateIcon className="w-4 h-4" />
-                    Last updated: {new Date(goldPriceData.lastUpdated).toLocaleString()}
+            <div className="grid grid-cols-2 gap-8">
+              <div>
+                <div className="text-sm opacity-90 mb-1">Per Ounce</div>
+                <div className="text-3xl font-semibold">
+                  {goldPriceData ? formatCurrency(goldPriceData.ounce, 'USD') : 'N/A'}
                 </div>
+              </div>
+              <div>
+                <div className="text-sm opacity-90 mb-1">Per Gram</div>
+                <div className="text-3xl font-semibold">
+                  {goldPriceData ? formatCurrency(goldPriceData.gram, 'USD') : 'N/A'}
+                </div>
+              </div>
             </div>
-          )}
-
-          <div>
-            <h2 className="text-lg font-semibold text-[var(--foreground)] mb-3">Convert to different currencies</h2>
-            <Select onValueChange={setSelectedCurrency} value={selectedCurrency}>
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select a currency" />
-              </SelectTrigger>
-              <SelectContent>
-                {exchangeRates && Object.keys(exchangeRates).map(currency => (
-                  <SelectItem key={currency} value={currency}>{currency}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
           </div>
+        </Card>
 
-          {convertedPrice && selectedCurrency && (
-            <div className="rounded-2xl p-5 text-[var(--secondary-foreground)]" style={{ background: 'var(--secondary-gradient)' }}>
-              <div className="flex items-center gap-3 mb-4">
+        {/* Currency Selection */}
+        <div>
+          <h3 className="text-lg font-medium mb-3">Convert to different currencies</h3>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                className="w-full h-12 justify-between font-medium bg-card hover:bg-muted/50 border-border shadow-design-sm transition-all duration-300"
+              >
+                {selectedCurrency ? (
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-lg">
+                      <span className="text-sm">{selectedCurrency}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Search className="h-4 w-4" />
+                    <span>Select currency...</span>
+                  </div>
+                )}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[320px] p-0 bg-popover border-border shadow-design-lg" align="start">
+              <Command className="bg-popover">
+                <div className="sticky top-0 z-10 bg-popover border-b border-border">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <CommandInput 
+                      placeholder="Search currency..." 
+                      className="h-12 pl-9"
+                    />
+                  </div>
+                </div>
+                <CommandList className="max-h-[300px] overflow-y-auto">
+                  <CommandEmpty>No currency found.</CommandEmpty>
+                  <CommandGroup className="p-2">
+                    {exchangeRates && Object.keys(exchangeRates).map((currency) => (
+                      <CommandItem
+                        key={currency}
+                        value={currency}
+                        onSelect={() => {
+                          setSelectedCurrency(currency);
+                        }}
+                        className="flex items-center gap-3 p-3 hover:bg-muted/80 hover:text-foreground data-[selected=true]:bg-muted/60 data-[selected=true]:text-foreground transition-colors cursor-pointer"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-white/10 border border-border flex items-center justify-center text-lg shadow-design-sm">
+                          <span className="text-sm">{currency}</span>
+                        </div>
+                        <span className="flex-1 font-semibold">{currency}</span>
+                        <Check
+                          className={cn(
+                            "h-4 w-4 text-primary",
+                            selectedCurrency === currency ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
+
+        {/* Converted Price Card */}
+        {convertedPrice && selectedCurrency && (
+          <Card className="w-full p-8 bg-gradient-to-r from-[#0e9f6e] to-[#06DD98FF] text-white rounded-xl">
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
                 <CurrencyExchangeIcon className="w-6 h-6" />
-                <h2 className="text-xl font-semibold">Converted Prices ({selectedCurrency})</h2>
+                <h2 className="text-xl font-medium">Converted Prices ({selectedCurrency})</h2>
               </div>
-              <div className="flex justify-around items-center">
-                <div className="text-center">
-                  <p className="opacity-80">Per Ounce</p>
-                  <p className="text-2xl font-bold">{convertedPrice.ounce.toLocaleString(undefined, { style: 'currency', currency: selectedCurrency, minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+              <div className="grid grid-cols-2 gap-8 mt-2">
+                <div>
+                  <div className="text-sm opacity-90 mb-2">Per Ounce</div>
+                  <div className="text-3xl font-semibold">
+                    {selectedCurrency} {parseFloat(convertedPrice.ounce.toFixed(2)).toLocaleString()}
+                  </div>
                 </div>
-                <div className="w-px h-16 bg-[var(--divider-color)]"></div>
-                <div className="text-center">
-                  <p className="opacity-80">Per Gram</p>
-                  <p className="text-2xl font-bold">{convertedPrice.gram.toLocaleString(undefined, { style: 'currency', currency: selectedCurrency, minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <div>
+                  <div className="text-sm opacity-90 mb-2">Per Gram</div>
+                  <div className="text-3xl font-semibold">
+                    {selectedCurrency} {parseFloat(convertedPrice.gram.toFixed(2)).toLocaleString()}
+                  </div>
                 </div>
               </div>
             </div>
-          )}
+          </Card>
+        )}
+
+        {/* Last Updated */}
+        {goldPriceData && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <UpdateIcon className="w-4 h-4" />
+            Last updated: {formatDate(goldPriceData.lastUpdated)}
+          </div>
+        )}
         </div>
       </Card>
 
-      <Dialog open={!!error} onOpenChange={() => setError(null)}>
-        <DialogContent>
-          <DialogHeader>
-            <div className="flex flex-col items-center text-center gap-2 py-4">
-                <ErrorIcon className="w-12 h-12 text-[var(--destructive)]" />
-                <DialogTitle className="text-xl font-bold">An Error Occurred</DialogTitle>
-                <p className="text-base text-[var(--muted-foreground)]">{error}</p>
-            </div>
-          </DialogHeader>
-          <DialogFooter>
-            <Button onClick={handleRetry} className="w-full">Retry</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      {/* Developer Credit */}
+      <div className="text-center mt-4">
+        <p className="text-sm text-muted-foreground">
+          Developed by{" "}
+          <a 
+            href="https://abdullahdev-five.vercel.app/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-primary hover:text-primary-dark underline decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
+          >
+            Abdullah.dev
+          </a>
+        </p>
+      </div>
     </div>
   );
 };
