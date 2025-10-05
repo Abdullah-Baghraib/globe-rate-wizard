@@ -5,21 +5,8 @@ export function Footer() {
     <footer className="bg-background/80 backdrop-blur-sm border-t border-border/40 mt-auto">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-          {/* Developer Credit */}
-          <p className="text-sm text-muted-foreground order-2 sm:order-1">
-            Developed by{" "}
-            <a 
-              href="https://abdullahdev-five.vercel.app/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-primary hover:text-primary-dark decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
-            >
-              Abdullah.dev
-            </a>
-          </p>
-
           {/* Social Media Links */}
-          <div className="flex items-center gap-4 order-1 sm:order-2">
+          <div className="flex items-center gap-4 order-1 sm:order-1">
             <a
               href="https://abdullahdev-five.vercel.app/"
               target="_blank"
@@ -77,6 +64,33 @@ export function Footer() {
                 <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" />
               </svg>
               <span className="sr-only">X (Twitter) Profile</span>
+            </a>
+          </div>
+
+          {/* Developer Credit */}
+          <p className="text-sm text-muted-foreground order-2 sm:order-2">
+            Developed by{" "}
+            <a 
+              href="https://abdullahdev-five.vercel.app/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:text-primary-dark decoration-primary hover:decoration-primary-dark transition-colors duration-200 font-medium"
+            >
+              Abdullah.dev
+            </a>
+          </p>
+
+          {/* Google Play Link */}
+          <div className="flex items-center gap-4 order-3 sm:order-3">
+            <a
+              href="https://play.google.com/store/apps/details?id=com.abdullahbaghraib.forexly"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground hover:text-primary transition-colors duration-200"
+              title="Google Play"
+            >
+              <img src="/images/Google Play.png" alt="Google Play" className="w-32" />
+              <span className="sr-only">Google Play Store</span>
             </a>
           </div>
         </div>
